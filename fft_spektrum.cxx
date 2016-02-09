@@ -9,7 +9,7 @@
 using namespace std;
 //-------------------------------
 void writeData(const fftw_complex* const f, const int N, const double L,const char* const fname);
-
+void read(const char* const fname, double* arg, const int N, double& L);
 //-------------------------------
 
 int main(int argc, char** argv){
@@ -33,7 +33,7 @@ int main(int argc, char** argv){
 	fftw_plan FW  = fftw_plan_dft_r2c_1d(N, inR, f, FFTW_ESTIMATE);
 
 	// Read input data
-
+	read(in_file,inR,N,L);
 	// Call function which reads the data from
 	// the input file into the array inR
 
@@ -65,3 +65,12 @@ void writeData(const fftw_complex* const f, const int N, const double L,const ch
 	out.close();
 }
 //-------------------------------
+void read(const char* const fname, double* arg,const  int N, double& L){
+  ifstream in(fname);
+  double temp;
+  for (int i=0; i<N-1; i++){
+    in >> temp >> arg[i];
+  }
+  in >> L >> arg[N-1];
+  
+}
